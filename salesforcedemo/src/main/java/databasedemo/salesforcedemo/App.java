@@ -1,6 +1,5 @@
 package databasedemo.salesforcedemo;
-
-import java.io.BufferedReader;
+import java.lang.Object;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.Charset;
@@ -9,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-
+import org.apache.commons.csv.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -24,7 +23,7 @@ public class App
     public static void main( String[] args )
     {
     	String sql="select * from Account";
-    	
+    	 final String[] header;
     	try{
     		
 		Connection con=DriverManager.getConnection("jdbc:mariadb://localhost:3306/sales?user=tech&password=");
@@ -38,27 +37,36 @@ public class App
 		FileReader in =new FileReader(file);
 		CSVParser parse= CSVParser.parse(file,Charset.forName("UTF-8"),CSVFormat.RFC4180.withFirstRecordAsHeader().withSkipHeaderRecord());
 		Iterable<CSVRecord> records=parse.getRecords();
-		BufferedReader br = new BufferedReader(new FileReader(path));
+		/*BufferedReader br = new BufferedReader(new FileReader(path));
         String header = br.readLine();
         if (header != null) {
             columnname = header.split(",");
-        }
-        System.out.println(columnname[0]);
+        }*/
+	
+		
+        
 		for(CSVRecord record :records) {
 			rs.moveToInsertRow();
 			for(int i=0;i<n-1;i++)
 			{
 				 column[i]=record.get(i);
+				 if(column[i].isEmpty()){
+					 continue;
+				 }
+				 
+				 
 				System.out.println(column[i]);
-				
+				columnname[i]=md.getColumnName(i+1);
+				//System.out.println("Hello"+columnname[i]);
 				rs.updateString(columnname[i], column[i]);
-				
+				 
 			
 				
 			}/*for(int i=1;i<66;i++)
 			{
 				column[i]=record.get(i);
 			}*/
+			rs.insertRow();
 			rs.moveToCurrentRow();
 			//ResultSet rs2=mystat.executeQuery("INSERT INTO  Account (columnname)VALUES (column[])");
 		}
