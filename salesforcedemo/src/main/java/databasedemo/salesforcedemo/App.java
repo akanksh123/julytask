@@ -52,8 +52,8 @@ public class App {
 						continue;
 					}
 					columnname[i] = md.getColumnName(i + 1);
-					System.out.println("Hello" + columnname[i]);
-					System.out.println(column[i]);
+					// System.out.println("Hello" + columnname[i]);
+					// System.out.println(column[i]);
 
 					rs.updateString(columnname[i], column[i]);
 
