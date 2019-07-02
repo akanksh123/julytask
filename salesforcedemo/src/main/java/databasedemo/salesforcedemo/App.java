@@ -70,7 +70,6 @@ public class App
 			rs.moveToCurrentRow();
 			//ResultSet rs2=mystat.executeQuery("INSERT INTO  Account (columnname)VALUES (column[])");
 		}
-		
 	}
 	catch(Exception e) {
 		e.printStackTrace();
