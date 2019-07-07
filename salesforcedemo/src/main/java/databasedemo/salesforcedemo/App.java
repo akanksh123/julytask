@@ -62,17 +62,12 @@ public class App {
 			for (int i = 0, j = 0; i < n && j < n; i++) {
 				cname[i] = md.getColumnName(i + 1);
 				ctype[i] = md.getColumnTypeName(i + 1);
-				// System.out.println(cname[i]);
 				if (cname[i].equalsIgnoreCase(columnname.get(j)) != true) {
-					// System.out.println(cname[i]);
-					// System.out.print(true);
 					ResultSet rs1 = stat
 							.executeQuery("ALTER TABLE " + tabname + " MODIFY " + cname[i] + " " + ctype[i] + " NULL");
 				} else {
-					// System.out.println(cname[i] + " " + columnname.get(j));
 					j++;
 				}
-				// System.out.println(md.getColumnName(i + 1));
 			}
 
 		} catch (Exception e) {
